@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net"
+	"strings"
 	"sync"
 	"time"
 )
@@ -68,8 +69,8 @@ func (this *Server) handler(conn net.Conn) {
 				user.Offline()
 				return
 			}
-			// 读取消息内容（去掉'\n'）
-			msg := string(buf[:n-1])
+			// 读取消息内容
+			msg := string(buf[:n])
 			// 广播
 			user.DoMessage(msg)
 			// 活跃
@@ -81,7 +82,7 @@ func (this *Server) handler(conn net.Conn) {
 		select {
 		case <-isLiveC:
 			// 激活 select 激活下方 case 重置定时器
-		case <-time.After(time.Second * 60):
+		case <-time.After(time.Minute * 10):
 			// 超时关闭
 			user.SendMsg("超时不活跃，连接已踢出")
 			// 关闭资源
@@ -111,6 +112,10 @@ func (this *Server) ListenMessageC() {
 		// 把消息发给所有在线用户
 		this.MapLock.RLock()
 		for _, val := range this.OnlineMap {
+			current := msg[1:strings.Index(msg, "]")]
+			if current == val.Addr {
+				continue
+			}
 			val.C <- msg
 		}
 		this.MapLock.RUnlock()
