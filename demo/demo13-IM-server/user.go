@@ -61,6 +61,24 @@ func (this *User) DoMessage(msg string) {
 			this.Name = newName
 			this.SendMsg("您的名称已修改为:" + newName)
 		}
+	} else if len(msg) > 4 && msg[:3] == "to|" {
+		// 私聊
+		remoteName := strings.Split(msg, "|")[1]
+		if remoteName == "" {
+			this.SendMsg("消息格式不正确，请使用 to|名称|内容")
+			return
+		}
+		remoteUser, ok := this.server.OnlineMap[remoteName]
+		if !ok {
+			this.SendMsg("目标用户不存在")
+			return
+		}
+		content := strings.Split(msg, "|")[2]
+		if content == "" {
+			this.SendMsg("请输入消息内容")
+			return
+		}
+		remoteUser.SendMsg(this.Name + "对你说:" + content)
 	} else {
 		this.server.BroadCast(this, msg)
 	}
@@ -71,12 +89,12 @@ func (this *User) DoMessage(msg string) {
 func (this *User) listenMessage() {
 	for {
 		msg := <-this.C
-		this.conn.Write([]byte(msg))
+		this.conn.Write([]byte(msg + "\r\n"))
 	}
 }
 
 func (this *User) SendMsg(msg string) {
-	this.conn.Write([]byte(msg))
+	this.conn.Write([]byte(msg + "\r\n"))
 }
 
 // NewUser

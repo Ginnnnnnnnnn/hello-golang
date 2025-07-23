@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"sync"
+	"time"
 )
 
 type Server struct {
@@ -52,6 +53,8 @@ func (this *Server) handler(conn net.Conn) {
 	user := NewUser(conn, this)
 	// 用户上线
 	user.Online()
+	// 活跃表示
+	isLiveC := make(chan bool)
 	// 接收客户端发送的消息
 	go func() {
 		buf := make([]byte, 4096)
@@ -69,10 +72,25 @@ func (this *Server) handler(conn net.Conn) {
 			msg := string(buf[:n-1])
 			// 广播
 			user.DoMessage(msg)
+			// 活跃
+			isLiveC <- true
 		}
 	}()
 	// 当前 handler 阻塞
-	select {}
+	for {
+		select {
+		case <-isLiveC:
+			// 激活 select 激活下方 case 重置定时器
+		case <-time.After(time.Second * 60):
+			// 超时关闭
+			user.SendMsg("超时不活跃，连接已踢出")
+			// 关闭资源
+			close(user.C)
+			conn.Close()
+			// 退出 handler
+			return
+		}
+	}
 }
 
 // BroadCast
