@@ -1,9 +1,14 @@
 package api
 
-import "github.com/gin-gonic/gin"
+import (
+	"demo1-gin/mod"
+	"github.com/gin-gonic/gin"
+)
 
 func Test(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "hello world",
-	})
+	// 绑定参数
+	user := mod.User{}
+	c.Bind(&user)
+	// 响应
+	c.JSON(200, user)
 }
