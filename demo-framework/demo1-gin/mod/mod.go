@@ -7,10 +7,10 @@ import (
 )
 
 type User struct {
-	Id    int    `json:"id" binding:"required,number"`
-	Name  string `json:"name" binding:"required"`
-	Sex   int    `json:"sex" binding:"sex"`
-	Email string `json:"email" binding:"omitempty,email"`
+	Id    int    `form:"id" json:"id" binding:"required,number"`
+	Name  string `form:"name" json:"name" binding:"required"`
+	Sex   int    `form:"sex" json:"sex" binding:"sex"`
+	Email string `form:"email" json:"email" binding:"omitempty,email"`
 }
 
 var sex validator.Func = func(fl validator.FieldLevel) bool {
