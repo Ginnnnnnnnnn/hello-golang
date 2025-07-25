@@ -1,5 +1,10 @@
 package models
 
+import (
+	"fmt"
+	"gorm.io/gorm"
+)
+
 // User 用户
 type User struct {
 	Id   int64 `gorm:"primaryKey,autoIncrement"`
@@ -10,6 +15,13 @@ type User struct {
 	BaseModel BaseModel `gorm:"embedded"`
 }
 
-func (User) TableName() string {
+// TableName 设置表名
+func (this *User) TableName() string {
 	return "user"
+}
+
+// BeforeDelete 删除前钩子
+func (u *User) BeforeDelete(tx *gorm.DB) (err error) {
+	fmt.Println("Before Delete")
+	return
 }

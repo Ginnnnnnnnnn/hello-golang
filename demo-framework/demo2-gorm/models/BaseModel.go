@@ -1,17 +1,20 @@
 package models
 
-import "time"
+import (
+	"gorm.io/gorm"
+	"time"
+)
 
 type BaseModel struct {
 	CreateTime time.Time
 	UpdateTime time.Time
-	Deleted    int8
+	Deleted    gorm.DeletedAt
 }
 
 func GetBaseModel() BaseModel {
 	return BaseModel{
 		CreateTime: time.Now(),
 		UpdateTime: time.Now(),
-		Deleted:    0,
+		Deleted:    gorm.DeletedAt{Time: time.Now(), Valid: true},
 	}
 }
