@@ -14,7 +14,7 @@ func main() {
 	// 数组参数严格校验长度
 	arrayType(array1)
 
-	// 数组参数是值 copy 和 slice 存在差异，slice是引用传递
+	// 数组参数是值 copy 和 slice 存在差异，slice是引用传递（num[i]仅限此操作,改变长度的操作不生效）
 	fmt.Printf("修改前 %v\n", array2)
 	arrayParam(array2)
 	fmt.Printf("修改后 %v\n", array2)
