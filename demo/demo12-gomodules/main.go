@@ -19,6 +19,7 @@ import "github.com/gin-gonic/gin"
 // go mod verify 校验一个模块是否被篡改过
 // go mod why 查看为什么需要依赖某模块
 // go list -m all 查看依赖版本。1.go list -m github.com/gin-gonic/gin 查看指定依赖 2.go list -m '...sql...' 模糊查询
+// go get -u github.com/gin-gonic/gin @lastest 获取依赖 1.go get -u gorm.io/gorm@v1.30.1 获取指定版本
 func main() {
 	router := gin.Default()
 	router.Run(":8080")
