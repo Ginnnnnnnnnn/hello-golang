@@ -12,7 +12,7 @@ type Comment struct {
 }
 
 func (c Comment) TableName() string {
-	return "comments"
+	return "comment"
 }
 
 func (c Comment) TableComment() string {
