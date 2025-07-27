@@ -63,11 +63,11 @@ func main() {
 }
 
 func initMysql() (db *gorm.DB, err error) {
-	user := "abckids"
-	password := "a38ynfiim7C51ips"
-	ip := "rm-bp18w5i1649sl1z20do.mysql.rds.aliyuncs.com"
+	user := "root"
+	password := "123456"
+	ip := "localhost"
 	port := "3306"
-	dbName := "test"
+	dbName := "hello-golang"
 	// 创建连接
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", user, password, ip, port, dbName)
 	return gorm.Open(mysql.Open(dsn), &gorm.Config{

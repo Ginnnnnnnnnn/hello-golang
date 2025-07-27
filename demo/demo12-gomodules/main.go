@@ -18,6 +18,7 @@ import "github.com/gin-gonic/gin"
 // go mod vendor 导出项目所有的依赖到vendor目录
 // go mod verify 校验一个模块是否被篡改过
 // go mod why 查看为什么需要依赖某模块
+// go list -m all 查看依赖版本。1.go list -m github.com/gin-gonic/gin 查看指定依赖 2.go list -m '...sql...' 模糊查询
 func main() {
 	router := gin.Default()
 	router.Run(":8080")
