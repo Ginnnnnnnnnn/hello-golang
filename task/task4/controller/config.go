@@ -16,10 +16,7 @@ const (
 const (
 	TOKEN          string = "Authorization"
 	JWT_SECRET_KEY string = "your_secret_key"
-)
-
-var (
-	userId uint
+	USER_ID        string = "userId"
 )
 
 var Router *gin.Engine
@@ -36,17 +33,9 @@ func init() {
 	Router.Any("/test", func(c *gin.Context) {
 		Ok(c, nil)
 	})
-	// 用户
-	{
-		userGroup := Router.Group("/user")
-		userGroup.POST("/register", Register)
-		userGroup.POST("/login", Login)
-	}
-	// 用户
-	{
-		userGroup := Router.Group("/post", auth)
-		userGroup.POST("/add", PostAdd)
-	}
+	UserApi()
+	PostApi()
+	CommentApi()
 }
 
 func auth(c *gin.Context) {
@@ -68,13 +57,14 @@ func auth(c *gin.Context) {
 	}
 	// 验证token
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		userId = uint(claims["id"].(float64))
+		userId := uint(claims["id"].(float64))
 		exp := int64(claims["exp"].(float64))
 		if exp < time.Now().Unix() {
 			Err(c, AUTH_ERR, "登录信息已失效")
 			c.Abort()
 			return
 		}
+		c.Set("userId", userId)
 	}
 	// 放行
 	c.Next()
@@ -93,4 +83,12 @@ func Err(c *gin.Context, code int, msg string) {
 		Code: code,
 		Msg:  msg,
 	})
+}
+
+func getUserId(c *gin.Context) uint {
+	userId, ok := c.Get(USER_ID)
+	if ok {
+		return userId.(uint)
+	}
+	return 0
 }

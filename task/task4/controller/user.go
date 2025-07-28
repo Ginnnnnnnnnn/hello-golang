@@ -9,6 +9,12 @@ import (
 	"time"
 )
 
+func UserApi() {
+	userGroup := Router.Group("/user")
+	userGroup.POST("/register", Register)
+	userGroup.POST("/login", Login)
+}
+
 func Register(c *gin.Context) {
 	var userAdd req.UserAdd
 	if err := c.ShouldBind(&userAdd); err != nil {

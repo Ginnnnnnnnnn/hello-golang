@@ -14,12 +14,10 @@ const (
 	token string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTM3MTY2MzksImlkIjoxLCJ1c2VybmFtZSI6ImdpbiJ9.QolDiHrOEZB2sqpZCPHaofsyoRTbNkuXGIla0bFRXxQ"
 )
 
-func main() {
-	postAdd()
-}
-
 func Get(url string, data url.Values) *controller.Response {
-	url = fmt.Sprintf("%s?%s", url, data.Encode())
+	if data != nil {
+		url = fmt.Sprintf("%s?%s", url, data.Encode())
+	}
 	// 发起请求
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
