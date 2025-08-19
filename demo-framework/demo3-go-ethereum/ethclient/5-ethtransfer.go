@@ -14,49 +14,54 @@ import (
 // EthTransfer ETH转账
 func EthTransfer() {
 	// 加载私钥
-	privateKey, err := crypto.HexToECDSA("fad9c8855b740a0b7ed4c221dbad0f33a83a49cad6b3fe8d5817ac83d38b6a19")
+	privateKey, err := crypto.HexToECDSA("privateKeyHex")
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	// 获取公钥
 	publicKey := privateKey.Public()
 	publicKeyECDSA, ok := publicKey.(*ecdsa.PublicKey)
 	if !ok {
 		log.Fatal("cannot assert type: publicKey is not of type *ecdsa.PublicKey")
 	}
-
+	// 获取地址
 	fromAddress := crypto.PubkeyToAddress(*publicKeyECDSA)
+	// 获取随机数
 	nonce, err := client.PendingNonceAt(context.Background(), fromAddress)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	value := big.NewInt(1000000000000000000) // in wei (1 eth)
-	gasLimit := uint64(21000)                // in units
+	// 获取交易目标地址
+	toAddress := common.HexToAddress("0x14727CFE397bcF3c258f559a6D3AF0d8F54615b6")
+	// 获取gas价格
 	gasPrice, err := client.SuggestGasPrice(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	toAddress := common.HexToAddress("0x4592d8f8d7b001e72cb26a73e4fa1806a51ac79d")
+	// 设置交易信息
 	var data []byte
-	tx := types.NewTransaction(nonce, toAddress, value, gasLimit, gasPrice, data)
-
+	txData := types.LegacyTx{
+		Nonce:    nonce,
+		To:       &toAddress,
+		Value:    big.NewInt(1000000000000000),
+		Gas:      uint64(21000),
+		GasPrice: gasPrice,
+		Data:     data,
+	}
+	tx := types.NewTx(&txData)
+	// 签名交易
 	chainID, err := client.NetworkID(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	signedTx, err := types.SignTx(tx, types.NewEIP155Signer(chainID), privateKey)
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	// 发送交易
 	err = client.SendTransaction(context.Background(), signedTx)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	fmt.Printf("tx sent: %s", signedTx.Hash().Hex())
-
 }

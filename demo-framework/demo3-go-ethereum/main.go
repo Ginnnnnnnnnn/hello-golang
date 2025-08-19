@@ -10,5 +10,7 @@ func main() {
 	// 查询收据
 	//ethclient.Receipt()
 	// 创建新钱包
-	ethclient.Wallet()
+	//ethclient.Wallet()
+	// ETH转账
+	ethclient.EthTransfer()
 }

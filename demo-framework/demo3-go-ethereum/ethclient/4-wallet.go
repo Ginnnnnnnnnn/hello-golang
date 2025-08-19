@@ -19,7 +19,7 @@ func Wallet() {
 	privateKeyBytes := crypto.FromECDSA(privateKey)
 	fmt.Println("私钥 =", hexutil.Encode(privateKeyBytes)[2:]) // 去掉 0x
 	// 现有私钥
-	//privateKey, err := crypto.HexToECDSA("509ace173b576fe8bdd4904a6af62a62c346651aec897be06619530a7e02e2d2")
+	//privateKey, err := crypto.HexToECDSA("privateKeyHex")
 	//if err != nil {
 	//	log.Fatal(err)
 	//}
