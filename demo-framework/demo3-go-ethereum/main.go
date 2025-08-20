@@ -12,5 +12,11 @@ func main() {
 	// 创建新钱包
 	//ethclient.Wallet()
 	// ETH转账
-	ethclient.EthTransfer()
+	//ethclient.EthTransfer()
+	// Token转账
+	//ethclient.TokenTransfer()
+	// ETH余额
+	//ethclient.EthBalance()
+	// Token余额
+	ethclient.TokenBalance()
 }
