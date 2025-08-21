@@ -14,7 +14,7 @@ import (
 // EthTransfer ETH转账
 func EthTransfer() {
 	// 加载私钥
-	privateKey, err := crypto.HexToECDSA("privateKeyHex")
+	privateKey, err := crypto.HexToECDSA(privateKeyHex)
 	if err != nil {
 		log.Fatal(err)
 	}

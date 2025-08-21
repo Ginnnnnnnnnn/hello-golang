@@ -23,5 +23,14 @@ func main() {
 	//ethclient.SubscribeBlock()
 	// 部署合约
 	//ethclient.DeployContract()
-	ethclient.ByteDeployContract()
+	//ethclient.ByteDeployContract()
+	// 加载合约
+	//ethclient.LoadContract()
+	// 执行合约
+	//ethclient.ExecuteContractGo()
+	//ethclient.ExecuteContractABI()
+	//ethclient.ExecuteContract()
+	// 合约事件
+	//ethclient.FindContractEvent()
+	ethclient.SubscribeContractEvent()
 }

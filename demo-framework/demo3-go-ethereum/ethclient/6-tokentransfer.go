@@ -17,7 +17,7 @@ func TokenTransfer() {
 	toAddress := common.HexToAddress("0x14727CFE397bcF3c258f559a6D3AF0d8F54615b6")
 	tokenAddress := common.HexToAddress("0x644Ea8f07c225Cb94426AB71af7538489139ce04")
 	// 加载私钥
-	privateKey, err := crypto.HexToECDSA("privateKeyHex")
+	privateKey, err := crypto.HexToECDSA(privateKeyHex)
 	if err != nil {
 		log.Fatal(err)
 	}
