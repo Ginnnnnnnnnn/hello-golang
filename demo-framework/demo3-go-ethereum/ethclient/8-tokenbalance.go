@@ -1,7 +1,7 @@
 package ethclient
 
 import (
-	erc20 "demo3-go-ethereum/contracts"
+	"demo3-go-ethereum/contracts/erc20"
 	"fmt"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"

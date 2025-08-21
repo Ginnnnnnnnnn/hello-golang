@@ -18,5 +18,10 @@ func main() {
 	// ETH余额
 	//ethclient.EthBalance()
 	// Token余额
-	ethclient.TokenBalance()
+	//ethclient.TokenBalance()
+	// 订阅区块
+	//ethclient.SubscribeBlock()
+	// 部署合约
+	//ethclient.DeployContract()
+	ethclient.ByteDeployContract()
 }
