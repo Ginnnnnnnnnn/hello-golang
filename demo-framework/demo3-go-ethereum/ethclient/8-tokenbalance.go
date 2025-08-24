@@ -9,9 +9,11 @@ import (
 )
 
 // TokenBalance Token余额
-// 1.solcjs --abi IERC20Metadata.sol
+// 1.solcjs --abi IERC20Metadata.sol 生成ABI文件
+// 2.solcjs --bin Store.sol 生成二进制文件
 // solcjs 通过 npm install -g solc 安装
-// 2.abigen --abi=erc20_sol_ERC20.abi --pkg=token --out=erc20.go
+// 1.abigen --abi=erc20_sol_ERC20.abi --pkg=token --out=erc20.go
+// 2.abigen --bin=Store_sol_Store.bin --abi=Store_sol_Store.abi --pkg=store --out=store.go
 // abigen 通过 go install github.com/ethereum/go-ethereum/cmd/abigen@latest 安装
 func TokenBalance() {
 	tokenAddress := common.HexToAddress("0x644Ea8f07c225Cb94426AB71af7538489139ce04")
